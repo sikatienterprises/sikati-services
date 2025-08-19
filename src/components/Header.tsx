@@ -13,11 +13,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="p-2 rounded-lg transition-all duration-300 dark:ring-2 dark:ring-primary/30 dark:ring-offset-1 dark:ring-offset-background dark:group-hover:ring-primary/50">
-              <img 
-                src="logo.png" 
-                className="w-10 h-10 transition-all duration-300 dark:drop-shadow-[0_0_8px_rgba(99,102,241,0.4)] dark:group-hover:drop-shadow-[0_0_12px_rgba(99,102,241,0.6)]" 
-                alt="Logo" 
+            <div className="p-2 rounded-lg ">
+              <img
+                src="logo.png"
+                className="w-10 h-10 transition-all duration-300 dark:drop-shadow-[0_0_8px_rgba(99,102,241,0.4)] dark:group-hover:drop-shadow-[0_0_12px_rgba(99,102,241,0.6)]"
+                alt="Logo"
               />
             </div>
             <span className="text-xl font-bold text-corporate dark:text-primary transition-colors duration-300">

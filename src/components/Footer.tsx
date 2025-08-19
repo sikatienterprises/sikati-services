@@ -154,7 +154,7 @@ const Footer = () => {
                     href="tel:+1-800-STAFFPRO"
                     className="text-corporate-foreground/80 hover:text-primary-glow transition-colors"
                   >
-                    1-800-STAFFPRO
+                    +91 7371960746
                   </a>
                 </div>
               </div>
@@ -167,7 +167,7 @@ const Footer = () => {
                     href="mailto:contact@staffprosolutions.com"
                     className="text-corporate-foreground/80 hover:text-primary-glow transition-colors"
                   >
-                    contact@staffprosolutions.com
+                    contact@sikati.in
                   </a>
                 </div>
               </div>
@@ -177,11 +177,11 @@ const Footer = () => {
                 <div>
                   <div className="font-medium">Main Office</div>
                   <div className="text-corporate-foreground/80">
-                    123 Business Plaza
+                    Ara
                     <br />
-                    Suite 400
+                    Bhojpur
                     <br />
-                    Austin, TX 78701
+                    Bihar, India, 802301
                   </div>
                 </div>
               </div>
