@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
 import { ThemeProvider } from "@/components/theme-provider";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
@@ -17,8 +17,55 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashoard";
 import Login from "./pages/Login";
 import { AuthProvider } from "./context/AuthProvider";
+import EmergencyRequestDetails from "./components/Admin/EmergencyRequestDetails";
+import QuoteDetails from "./components/Admin/QuoteDetails";
+import AdminLayout from "./layouts/AdminLayout";
 
 const queryClient = new QueryClient();
+
+// Root layout wrapper
+const RootLayout = () => (
+  <>
+    <ScrollToTop />
+    <Outlet />
+  </>
+);
+
+const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    errorElement: <NotFound />,
+    children: [
+      { path: "/", element: <Index /> },
+      { path: "/services", element: <Services /> },
+      { path: "/how-it-works", element: <HowItWorks /> },
+      { path: "/about", element: <About /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/quote", element: <Quote /> },
+      { path: "/emergency", element: <Emergency /> },
+      { path: "/login", element: <Login /> },
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            index: true,
+            element: <AdminDashboard />,
+          },
+          {
+            path: "emergency-request/:id",
+            element: <EmergencyRequestDetails />,
+          },
+          { path: "quote/:id", element: <QuoteDetails /> },
+        ],
+      },
+    ],
+  },
+]);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -27,31 +74,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/quote" element={<Quote />} />
-              <Route path="/emergency" element={<Emergency />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-
-              <Route path="/login" element={<Login />} />
-
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
+          <RouterProvider router={router} />
         </TooltipProvider>
       </ThemeProvider>
     </AuthProvider>

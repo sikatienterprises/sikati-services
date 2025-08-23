@@ -9,7 +9,8 @@ import { useAuth } from "@/context/AuthProvider";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -21,10 +22,12 @@ type LoginForm = z.infer<typeof loginSchema>;
 export default function Login() {
   const navigate = useNavigate();
   const { login, user } = useAuth();
-  if (user) {
-    navigate("/admin");
-    toast.info("You are already logged in");
-  }
+
+  useEffect(() => {
+    if (user) {
+      navigate("/admin");
+    }
+  }, [user, navigate]);
 
   const {
     register,

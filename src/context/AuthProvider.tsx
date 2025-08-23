@@ -8,6 +8,8 @@ import {
   useEffect,
 } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import api from "@/lib/api";
+import { toast } from "sonner";
 
 type User = {
   id: string;
@@ -42,9 +44,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(user);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await api.post("/auth/logout");
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    toast.success("Logged out successfully");
     queryClient.clear();
     setUser(null);
   };

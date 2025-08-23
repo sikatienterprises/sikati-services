@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Users, Shield, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import heroTeam from "@/assets/hero-team.jpg";
 
 const Hero = () => {

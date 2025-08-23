@@ -1,6 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { useAuth } from "@/context/AuthProvider";
+import { Navigate, Outlet } from "react-router";
 
 const AdminLayout = () => {
+  const { user } = useAuth();
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <div className="flex flex-col h-screen">
       <header className="bg-gray-800 text-white p-4">

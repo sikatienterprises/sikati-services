@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar, Users, Clock, MapPin } from "lucide-react";
+import { createQuote } from "@/api";
+import { useMutation } from "@tanstack/react-query";
 
 const quoteFormSchema = z.object({
   contactName: z.string().min(2, "Name must be at least 2 characters"),
@@ -49,6 +51,10 @@ const quoteFormSchema = z.object({
 type QuoteFormValues = z.infer<typeof quoteFormSchema>;
 
 const Quote = () => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: QuoteFormValues) => createQuote(data),
+  });
+
   const {
     register,
     handleSubmit,
@@ -69,30 +75,7 @@ const Quote = () => {
   });
 
   const onSubmit = async (data: QuoteFormValues) => {
-    console.log(data);
-    try {
-      console.log(data);
-      // TODO: Implement API call
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/contact/quote`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to submit quote request");
-      }
-
-      // Handle success (e.g., show success message, redirect, etc.)
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      // Handle error (e.g., show error message)
-    }
+    mutate(data);
   };
 
   return (
@@ -456,9 +439,9 @@ const Quote = () => {
                       variant="hero"
                       size="lg"
                       className="px-12"
-                      disabled={isSubmitting}
+                      disabled={isPending}
                     >
-                      {isSubmitting ? "Submitting..." : "Get My Quote"}
+                      {isPending ? "Submitting..." : "Get My Quote"}
                     </Button>
                     <p className="text-sm text-muted-foreground mt-4">
                       We'll respond within 1 hour during business hours, or
